@@ -1,0 +1,273 @@
+import React, { useState, useEffect } from 'react';
+
+// --- Helper Functions & Constants ---
+
+const API_BASE_URL = 'http://localhost:3001/api';
+
+// Helper function to handle JSONP requests for the CarQuery API
+const fetchJsonp = (url) => {
+    return new Promise((resolve, reject) => {
+        const callbackName = `jsonp_callback_${Math.round(100000 * Math.random())}`;
+        const script = document.createElement('script');
+        
+        window[callbackName] = (data) => {
+            delete window[callbackName];
+            document.body.removeChild(script);
+            resolve(data);
+        };
+        
+        script.onerror = () => {
+            delete window[callbackName];
+            document.body.removeChild(script);
+            reject(new Error('JSONP request failed'));
+        };
+
+        script.src = url.replace('callback=?', `callback=${callbackName}`);
+        document.body.appendChild(script);
+    });
+};
+
+
+// --- UI Components ---
+
+// A simple, reusable loading spinner component
+const Spinner = ({ size = 'h-5 w-5' }) => (
+    <div className={`animate-spin rounded-full border-2 border-sky-400 border-t-transparent ${size}`} role="status">
+        <span className="sr-only">Loading...</span>
+    </div>
+);
+
+// A reusable dropdown component for vehicle selection
+const SelectDropdown = ({ label, value, onChange, options, disabled = false, placeholder, loading = false }) => (
+    <div className="relative w-full">
+        <label htmlFor={label} className="block text-sm font-medium text-gray-300 mb-1">{label}</label>
+        <select
+            id={label}
+            value={value}
+            onChange={onChange}
+            disabled={disabled || loading}
+            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-white disabled:opacity-50 disabled:cursor-not-allowed appearance-none"
+        >
+            <option value="">{placeholder}</option>
+            {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                    {option.label}
+                </option>
+            ))}
+        </select>
+        {loading && <div className="absolute right-3 top-1/2 -translate-y-1/2 mt-3"><Spinner /></div>}
+    </div>
+);
+
+// A card to display individual part information
+const PartCard = ({ part }) => (
+    <div className="bg-gray-700 rounded-lg p-3 flex justify-between items-center shadow-md">
+        <div>
+            <p className="font-bold text-white">{part.name}</p>
+            <p className="text-sm text-gray-400">{part.manufacturer}</p>
+        </div>
+        <button className="bg-sky-600 hover:bg-sky-500 text-white font-bold h-8 w-8 rounded-full flex items-center justify-center transition-colors duration-200" title="Add to Build">
+            <span className="text-xl">+</span>
+        </button>
+    </div>
+);
+
+// A column to display a category of parts
+const PartsColumn = ({ title, parts, isLoading }) => (
+    <div className="bg-gray-800/50 rounded-lg p-4 flex-1 min-w-[280px]">
+        <h3 className="text-xl font-bold text-sky-400 mb-4 text-center">{title}</h3>
+        <div className="space-y-3">
+            {isLoading ? (
+                <div className="flex justify-center items-center h-24">
+                    <Spinner size="h-8 w-8" />
+                </div>
+            ) : parts.length > 0 ? (
+                parts.map(part => <PartCard key={part.id} part={part} />)
+            ) : (
+                <p className="text-gray-500 text-center">No parts found.</p>
+            )}
+        </div>
+    </div>
+);
+
+
+// --- Main Application Component ---
+export default function App() {
+    // --- State Management ---
+    const [years, setYears] = useState([]);
+    const [makes, setMakes] = useState([]);
+    const [models, setModels] = useState([]);
+
+    const [selectedYear, setSelectedYear] = useState('');
+    const [selectedMake, setSelectedMake] = useState('');
+    const [selectedModel, setSelectedModel] = useState('');
+    
+    const [loadingMakes, setLoadingMakes] = useState(false);
+    const [loadingModels, setLoadingModels] = useState(false);
+    
+    const [selectedVehicle, setSelectedVehicle] = useState(null);
+    const [isPlanningMode, setIsPlanningMode] = useState(false);
+
+    const [parts, setParts] = useState({ engines: [], transmissions: [], ecus: [] });
+    const [isLoadingParts, setIsLoadingParts] = useState(false);
+
+    // --- Effects ---
+
+    // Populate the 'Year' dropdown on initial render
+    useEffect(() => {
+        const currentYear = new Date().getFullYear();
+        const yearOptions = [];
+        for (let year = currentYear; year >= 1980; year--) {
+            yearOptions.push({ value: year, label: year });
+        }
+        setYears(yearOptions);
+    }, []);
+
+    // Fetch 'Makes' when a 'Year' is selected
+    useEffect(() => {
+        if (!selectedYear) {
+            setMakes([]);
+            setSelectedMake('');
+            return;
+        }
+        const getMakes = async () => {
+            setLoadingMakes(true);
+            setSelectedMake('');
+            setModels([]);
+            setSelectedModel('');
+            try {
+                const data = await fetchJsonp(`https://www.carqueryapi.com/api/0.3/?cmd=getMakes&year=${selectedYear}&callback=?`);
+                setMakes(data.Makes.map(m => ({ value: m.make_id, label: m.make_display })));
+            } catch (error) { console.error("Failed to fetch makes:", error); } 
+            finally { setLoadingMakes(false); }
+        };
+        getMakes();
+    }, [selectedYear]);
+
+    // Fetch 'Models' when a 'Make' is selected
+    useEffect(() => {
+        if (!selectedMake || !selectedYear) {
+            setModels([]);
+            setSelectedModel('');
+            return;
+        }
+        const getModels = async () => {
+            setLoadingModels(true);
+            setSelectedModel('');
+            try {
+                const data = await fetchJsonp(`https://www.carqueryapi.com/api/0.3/?cmd=getModels&make=${selectedMake}&year=${selectedYear}&callback=?`);
+                setModels(data.Models.map(m => ({ value: m.model_name, label: m.model_name })));
+            } catch (error) { console.error("Failed to fetch models:", error); } 
+            finally { setLoadingModels(false); }
+        };
+        getModels();
+    }, [selectedMake, selectedYear]);
+
+    // Fetch all parts categories when entering planning mode
+    useEffect(() => {
+        if (!isPlanningMode) return;
+
+        const fetchAllParts = async () => {
+            setIsLoadingParts(true);
+            try {
+                const partTypes = ['Engine', 'Transmission', 'ECU'];
+                const requests = partTypes.map(type => 
+                    fetch(`${API_BASE_URL}/parts/${type}`).then(res => res.json())
+                );
+                
+                const [engines, transmissions, ecus] = await Promise.all(requests);
+                
+                setParts({
+                    engines: engines || [],
+                    transmissions: transmissions || [],
+                    ecus: ecus || [],
+                });
+
+            } catch (error) {
+                console.error("Failed to fetch parts:", error);
+                // Optionally set an error state here to show in the UI
+            } finally {
+                setIsLoadingParts(false);
+            }
+        };
+
+        fetchAllParts();
+    }, [isPlanningMode]);
+
+
+    // --- Event Handlers ---
+    const handleSelectVehicle = () => {
+        if (isButtonDisabled) return;
+        const makeLabel = makes.find(m => m.value === selectedMake)?.label;
+        setSelectedVehicle({ year: selectedYear, make: makeLabel, model: selectedModel });
+        setIsPlanningMode(true);
+    };
+    
+    const handleChangeVehicle = () => {
+        setIsPlanningMode(false);
+        setSelectedVehicle(null);
+        // Reset selections for a fresh start
+        setSelectedYear('');
+        setSelectedMake('');
+        setSelectedModel('');
+        setMakes([]);
+        setModels([]);
+        setParts({ engines: [], transmissions: [], ecus: [] });
+    };
+
+    // --- Derived State ---
+    const isButtonDisabled = !selectedYear || !selectedMake || !selectedModel;
+
+    // --- Render ---
+    return (
+        <div className="bg-gray-900 min-h-screen font-sans p-4 text-white">
+            <div className="container mx-auto max-w-6xl">
+                {!isPlanningMode ? (
+                    // --- Vehicle Selection View ---
+                    <div className="flex items-center justify-center min-h-[80vh]">
+                        <div className="w-full max-w-lg bg-gray-800 rounded-xl shadow-2xl p-6 md:p-8 space-y-6">
+                            <header className="text-center">
+                                <h1 className="text-2xl md:text-3xl font-bold text-sky-400">ModMyCar</h1>
+                                <p className="text-sm md:text-base text-gray-400">Your Vehicle Modification Planner</p>
+                            </header>
+                            <div className="space-y-4">
+                                <SelectDropdown label="Year" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} options={years} placeholder="Select a Year" />
+                                <SelectDropdown label="Make" value={selectedMake} onChange={(e) => setSelectedMake(e.target.value)} options={makes} disabled={!selectedYear} loading={loadingMakes} placeholder={loadingMakes ? 'Loading...' : 'Select a Make'} />
+                                <SelectDropdown label="Model" value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} options={models} disabled={!selectedMake} loading={loadingModels} placeholder={loadingModels ? 'Loading...' : 'Select a Model'} />
+                            </div>
+                            <button onClick={handleSelectVehicle} disabled={isButtonDisabled} className="w-full bg-sky-600 text-white font-bold py-3 px-4 rounded-md hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-sky-500 disabled:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-70 transition-colors duration-300">
+                                Select Vehicle
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    // --- Modification Planning View ---
+                    <div className="space-y-6">
+                        <header className="bg-gray-800 p-4 rounded-lg flex flex-col md:flex-row justify-between items-center shadow-lg">
+                            <div>
+                                <h2 className="text-lg text-gray-400">Your Build for:</h2>
+                                <p className="text-2xl text-sky-300 font-bold">
+                                    {selectedVehicle?.year} {selectedVehicle?.make} {selectedVehicle?.model}
+                                </p>
+                            </div>
+                            <button onClick={handleChangeVehicle} className="mt-3 md:mt-0 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-md transition-colors duration-200">
+                                Change Vehicle
+                            </button>
+                        </header>
+
+                        <main className="flex flex-col md:flex-row gap-4 md:gap-6">
+                            <PartsColumn title="Engines" parts={parts.engines} isLoading={isLoadingParts} />
+                            <PartsColumn title="Transmissions" parts={parts.transmissions} isLoading={isLoadingParts} />
+                            <PartsColumn title="ECUs" parts={parts.ecus} isLoading={isLoadingParts} />
+                        </main>
+                    </div>
+                )}
+                 <footer className="text-center mt-8 text-gray-500 text-xs">
+                    <p>Powered by the CarQuery API & Supabase.</p>
+                </footer>
+            </div>
+        </div>
+    );
+}
+
+
