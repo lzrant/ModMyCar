@@ -1,0 +1,8 @@
+node_modules
+package-lock.json
+dist
+coverage
+server/data
+server/db/seed.sql
+test-results
+playwright-report

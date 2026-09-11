@@ -1,0 +1,73 @@
+[
+  {
+    "id": "sports-coupe",
+    "label": "Sports coupe",
+    "assetUrl": "/models/kenney-car-kit/race.glb",
+    "dimensions": {
+      "length": 5.2,
+      "width": 2.05,
+      "height": 0.82,
+      "cabinX": 0.28,
+      "cabinWidth": 1.7,
+      "cabinHeight": 0.7,
+      "wheelBase": 3.75
+    }
+  },
+  {
+    "id": "sedan",
+    "label": "Sedan",
+    "assetUrl": "/models/kenney-car-kit/sedanSports.glb",
+    "dimensions": {
+      "length": 5.5,
+      "width": 2,
+      "height": 0.95,
+      "cabinX": 0.05,
+      "cabinWidth": 2.05,
+      "cabinHeight": 0.78,
+      "wheelBase": 3.95
+    }
+  },
+  {
+    "id": "hatchback",
+    "label": "Hatchback",
+    "assetUrl": "/models/kenney-car-kit/hatchbackSports.glb",
+    "dimensions": {
+      "length": 4.75,
+      "width": 1.95,
+      "height": 1.08,
+      "cabinX": 0,
+      "cabinWidth": 2.25,
+      "cabinHeight": 0.86,
+      "wheelBase": 3.35
+    }
+  },
+  {
+    "id": "suv",
+    "label": "SUV / crossover",
+    "assetUrl": "/models/kenney-car-kit/suv.glb",
+    "dimensions": {
+      "length": 5.35,
+      "width": 2.15,
+      "height": 1.38,
+      "cabinX": 0.1,
+      "cabinWidth": 2.45,
+      "cabinHeight": 1,
+      "wheelBase": 3.75
+    }
+  },
+  {
+    "id": "truck",
+    "label": "Pickup truck",
+    "assetUrl": "/models/kenney-car-kit/truck.glb",
+    "dimensions": {
+      "length": 6.1,
+      "width": 2.2,
+      "height": 1.28,
+      "cabinX": -0.72,
+      "cabinWidth": 1.9,
+      "cabinHeight": 0.95,
+      "wheelBase": 4.25,
+      "bed": true
+    }
+  }
+]

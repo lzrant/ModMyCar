@@ -1,0 +1,326 @@
+{
+  "vehicles": [
+    {
+      "id": 1,
+      "year": 2018,
+      "make": "Subaru",
+      "model": "WRX",
+      "trim": "2.0L sedan",
+      "profile": {
+        "id": "sedan",
+        "label": "Sedan",
+        "assetUrl": "/models/kenney-car-kit/sedanSports.glb",
+        "dimensions": {
+          "length": 5.5,
+          "width": 2,
+          "height": 0.95,
+          "cabinX": 0.05,
+          "cabinWidth": 2.05,
+          "cabinHeight": 0.78,
+          "wheelBase": 3.95
+        }
+      }
+    },
+    {
+      "id": 2,
+      "year": 2018,
+      "make": "Toyota",
+      "model": "86",
+      "trim": "2.0L coupe",
+      "profile": {
+        "id": "sports-coupe",
+        "label": "Sports coupe",
+        "assetUrl": "/models/kenney-car-kit/race.glb",
+        "dimensions": {
+          "length": 5.2,
+          "width": 2.05,
+          "height": 0.82,
+          "cabinX": 0.28,
+          "cabinWidth": 1.7,
+          "cabinHeight": 0.7,
+          "wheelBase": 3.75
+        }
+      }
+    },
+    {
+      "id": 3,
+      "year": 2018,
+      "make": "Subaru",
+      "model": "BRZ",
+      "trim": "2.0L coupe",
+      "profile": {
+        "id": "sports-coupe",
+        "label": "Sports coupe",
+        "assetUrl": "/models/kenney-car-kit/race.glb",
+        "dimensions": {
+          "length": 5.2,
+          "width": 2.05,
+          "height": 0.82,
+          "cabinX": 0.28,
+          "cabinWidth": 1.7,
+          "cabinHeight": 0.7,
+          "wheelBase": 3.75
+        }
+      }
+    },
+    {
+      "id": 4,
+      "year": 2019,
+      "make": "Subaru",
+      "model": "WRX",
+      "trim": "2.0L sedan",
+      "profile": {
+        "id": "sedan",
+        "label": "Sedan",
+        "assetUrl": "/models/kenney-car-kit/sedanSports.glb",
+        "dimensions": {
+          "length": 5.5,
+          "width": 2,
+          "height": 0.95,
+          "cabinX": 0.05,
+          "cabinWidth": 2.05,
+          "cabinHeight": 0.78,
+          "wheelBase": 3.95
+        }
+      }
+    },
+    {
+      "id": 5,
+      "year": 2019,
+      "make": "Toyota",
+      "model": "86",
+      "trim": "2.0L coupe",
+      "profile": {
+        "id": "sports-coupe",
+        "label": "Sports coupe",
+        "assetUrl": "/models/kenney-car-kit/race.glb",
+        "dimensions": {
+          "length": 5.2,
+          "width": 2.05,
+          "height": 0.82,
+          "cabinX": 0.28,
+          "cabinWidth": 1.7,
+          "cabinHeight": 0.7,
+          "wheelBase": 3.75
+        }
+      }
+    },
+    {
+      "id": 6,
+      "year": 2019,
+      "make": "Subaru",
+      "model": "BRZ",
+      "trim": "2.0L coupe",
+      "profile": {
+        "id": "sports-coupe",
+        "label": "Sports coupe",
+        "assetUrl": "/models/kenney-car-kit/race.glb",
+        "dimensions": {
+          "length": 5.2,
+          "width": 2.05,
+          "height": 0.82,
+          "cabinX": 0.28,
+          "cabinWidth": 1.7,
+          "cabinHeight": 0.7,
+          "wheelBase": 3.75
+        }
+      }
+    }
+  ],
+  "parts": [
+    {
+      "id": 1,
+      "name": "RPF1 \u00b7 18\u00d78.5 +40",
+      "manufacturer": "Enkei",
+      "sku": "3798856540SP",
+      "visual_category": "wheels",
+      "render_key": "split-spoke",
+      "source_url": "https://enkei.com/shop/wheels/racing/rpf1/",
+      "fitment_notes": "5\u00d7114.3 reference fitment; verify tire, hub ring and brake clearance for your trim.",
+      "specifications": {
+        "diameter": "18 in",
+        "width": "8.5 in",
+        "offset": "+40 mm",
+        "pattern": "5\u00d7114.3"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Raijin \u00b7 18\u00d78.5 +38",
+      "manufacturer": "Enkei",
+      "sku": "467-885-6538",
+      "visual_category": "wheels",
+      "render_key": "mesh-wheel",
+      "source_url": "https://enkei.com/shop/wheels/tuning/raijin/",
+      "fitment_notes": "5\u00d7114.3 reference fitment; verify tire, hub ring and brake clearance for your trim.",
+      "specifications": {
+        "diameter": "18 in",
+        "offset": "+38 mm",
+        "pattern": "5\u00d7114.3"
+      }
+    },
+    {
+      "id": 3,
+      "name": "LEGAMAX Premium",
+      "manufacturer": "HKS",
+      "sku": "31021-BF001",
+      "visual_category": "exhaust",
+      "render_key": "quad-polished",
+      "source_url": "https://hksusa.com/product/31021-BF001",
+      "fitment_notes": "US-spec WRX; consult manufacturer installation notes.",
+      "specifications": {}
+    },
+    {
+      "id": 4,
+      "name": "PRO-KIT lowering springs",
+      "manufacturer": "Eibach",
+      "sku": "7727.140",
+      "visual_category": "suspension",
+      "render_key": "sport-drop",
+      "source_url": "https://eibach.com/product/7727.140",
+      "fitment_notes": "Manufacturer lists 2015\u20132021 WRX sedan.",
+      "specifications": {
+        "drop": "0.8 in front / rear"
+      }
+    },
+    {
+      "id": 5,
+      "name": "GTC-300 \u00b7 61-inch carbon wing",
+      "manufacturer": "APR Performance",
+      "sku": "GTC-300 WRX 2015\u20132021",
+      "visual_category": "aero",
+      "render_key": "carbon-wing",
+      "source_url": "https://shop.aprperformance.com/products/apr-performance-61-gtc-300-wing-subaru-wrx-2015-2021-spec",
+      "fitment_notes": "WRX-specific mounts; installation requires drilling.",
+      "specifications": {}
+    },
+    {
+      "id": 6,
+      "name": "RPF1 \u00b7 18\u00d78 +45",
+      "manufacturer": "Enkei",
+      "sku": "3798808045SP",
+      "visual_category": "wheels",
+      "render_key": "split-spoke",
+      "source_url": "https://enkei.com/shop/wheels/racing/rpf1/",
+      "fitment_notes": "5\u00d7100 reference fitment; check tire and brake clearance, especially performance brake packages.",
+      "specifications": {
+        "diameter": "18 in",
+        "width": "8 in",
+        "offset": "+45 mm",
+        "pattern": "5\u00d7100"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Hi-Power SPEC-L II",
+      "manufacturer": "HKS",
+      "sku": "32016-AT123",
+      "visual_category": "exhaust",
+      "render_key": "dual-polished",
+      "source_url": "https://hksusa.com/product/32016-AT123",
+      "fitment_notes": "ZN6 / ZC6 platform; use manufacturer fitment and installation instructions.",
+      "specifications": {}
+    },
+    {
+      "id": 8,
+      "name": "GTC-200 carbon wing",
+      "manufacturer": "APR Performance",
+      "sku": "GTC-200 ZN6/ZC6",
+      "visual_category": "aero",
+      "render_key": "carbon-wing",
+      "source_url": "https://shop.aprperformance.com/products/scion-fr-s-toyota-gt86-subaru-brz-gtc-200-adjustable-wing-2013-2016",
+      "fitment_notes": "Manufacturer lists 2013\u20132021 platform; drilling required. Preview uses a representative GT wing.",
+      "specifications": {}
+    }
+  ],
+  "compatibility": [
+    {
+      "part_id": 1,
+      "vehicle_id": 1
+    },
+    {
+      "part_id": 1,
+      "vehicle_id": 4
+    },
+    {
+      "part_id": 2,
+      "vehicle_id": 1
+    },
+    {
+      "part_id": 2,
+      "vehicle_id": 4
+    },
+    {
+      "part_id": 3,
+      "vehicle_id": 1
+    },
+    {
+      "part_id": 3,
+      "vehicle_id": 4
+    },
+    {
+      "part_id": 4,
+      "vehicle_id": 1
+    },
+    {
+      "part_id": 4,
+      "vehicle_id": 4
+    },
+    {
+      "part_id": 5,
+      "vehicle_id": 1
+    },
+    {
+      "part_id": 5,
+      "vehicle_id": 4
+    },
+    {
+      "part_id": 6,
+      "vehicle_id": 2
+    },
+    {
+      "part_id": 6,
+      "vehicle_id": 3
+    },
+    {
+      "part_id": 6,
+      "vehicle_id": 5
+    },
+    {
+      "part_id": 6,
+      "vehicle_id": 6
+    },
+    {
+      "part_id": 7,
+      "vehicle_id": 2
+    },
+    {
+      "part_id": 7,
+      "vehicle_id": 3
+    },
+    {
+      "part_id": 7,
+      "vehicle_id": 5
+    },
+    {
+      "part_id": 7,
+      "vehicle_id": 6
+    },
+    {
+      "part_id": 8,
+      "vehicle_id": 2
+    },
+    {
+      "part_id": 8,
+      "vehicle_id": 3
+    },
+    {
+      "part_id": 8,
+      "vehicle_id": 5
+    },
+    {
+      "part_id": 8,
+      "vehicle_id": 6
+    }
+  ]
+}
